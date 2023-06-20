@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SongsList{% endblock %}
+
+{% block body %}
+    <h1>Create new SongsList</h1>
+
+    {{ include('songs_list/_form.html.twig') }}
+
+    <a href="{{ path('app_songs_list_index') }}">back to list</a>
+{% endblock %}

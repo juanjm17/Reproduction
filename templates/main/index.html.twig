@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Página principal ✅</h1>
+    {% if app.user is not null %}
+        {% if is_granted('ROLE_USER') %}
+            <p>Bienvenido, estás registrado como {{ app.user.username }}.</p>
+            <p>ID:{{ app.user.id }}</p>
+            <!-- Otro contenido específico para usuarios registrados -->
+            <nav>
+                <ul>
+                    <li><a href="{{ path('app_main') }}">Inicio</a></li>
+                    <li><a href="{{ path('app_songs_list_new') }}">Crear lista de reproducción</a></li>
+                    <li><a href="{{ path('app_song_songs') }}">Lista de canciones</a></li>
+                    <!-- Otros enlaces de navegación -->
+                </ul>
+            </nav>
+
+            {% if current_user_lists is not empty %}
+                <h2>Listas de reproducción del usuario</h2>
+                <ul>
+                    {% for playlist in current_user_lists %}
+                    <a href="{{ path('app_songs_list_edit',{'id':playlist.id})}}">Añadir cancion a lista</a>
+                        <li>{{playlist.title}}</li>
+                        <li><p>Cantidad:{{  playlist.song|length  }} </p></li>
+                        <li>{{playlist.totalDuration|date('i:s')}} minutos</li>
+                        {% for song in playlist.song %}
+                            <li><p>{{ song.title }}</p></li>
+                             
+                        {% endfor %}
+                       
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No tienes ninguna lista de reproducción.</p>
+            {% endif %}
+
+            <a href="{{ path('app_song_new',{'id':app.user.id})}}">Añadir canción</a>
+
+        {% endif %}
+    {% else %}
+        <p>¡Bienvenido! Por favor, inicia sesión o regístrate para continuar.</p>
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_login') }}">Iniciar sesión</a></li>
+                <li><a href="{{ path('app_register') }}">Registrarse</a></li>
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

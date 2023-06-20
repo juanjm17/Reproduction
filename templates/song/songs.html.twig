@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="example-wrapper">
+    <h1>Canciones</h1>
+    <h1>¡Para meter estas canciones en una lista de reproducción debe de hacerlo desde la página principal!</h1>
+    <a href="{{ path('app_main') }}">Volver a la página principal</a>
+    <form action="{{ path('app_song_search') }}" method="GET">
+        <input type="text" name="search" placeholder="Buscar por autor o título">
+        <button type="submit">Buscar</button>
+    </form>
+    
+    {% for song in songs %}
+        <h1>{{ song.title }}</h1>
+        <h2>{{song.author}}</h2>
+        <h3>{{song.duration|date('i:s')}}</h3>
+        {# <a href="{{ path('app_song_edit', {'id': song.id, 'userId': app.user.id}) }}">Añadir a lista</a> #}
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}

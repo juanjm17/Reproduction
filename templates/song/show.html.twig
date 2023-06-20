@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Song{% endblock %}
+
+{% block body %}
+    <h1>Song</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ song.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ song.title }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ song.author }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{ song.duration ? song.duration|date('H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+     {{dump("hola")}}
+    {%  if is_granted('ROLE_ADMIN') %}
+   
+    <a href="{{ path('app_song_index') }}">back to list</a>
+
+    <a href="{{ path('app_song_edit', {'id': song.id}) }}">edit</a>
+    {% endif %}
+    {{ include('song/_delete_form.html.twig') }}
+{% endblock %}
